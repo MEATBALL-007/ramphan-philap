@@ -68,7 +68,7 @@
   .kicker{font-size:.9rem;letter-spacing:.32em;color:var(--gold-soft);font-weight:600;text-transform:uppercase}
   .hero h1{
     font-family:'Chonburi',serif;font-weight:400;
-    font-size:clamp(3.4rem,11vw,6.2rem);line-height:1;color:var(--gold);
+    font-size:clamp(2.6rem,12vw,6.2rem);line-height:1;color:var(--gold);
     margin:14px 0 6px;text-shadow:0 2px 0 rgba(107,86,46,.55),0 0 30px rgba(232,212,134,.2)}
   .hero .sub{font-family:'Charmonman',cursive;font-size:clamp(1.4rem,4.5vw,2rem);color:var(--indigo);font-weight:700}
   .hero .byline{margin-top:22px;font-size:1.02rem;color:var(--ink-soft)}
@@ -165,6 +165,46 @@
   footer .src{max-width:640px;margin:14px auto 0;font-size:.85rem;color:var(--ink-soft);line-height:1.9}
   footer .src a{color:var(--gold-soft);text-decoration:none;border-bottom:1px dotted var(--gold-soft)}
   footer .made{margin-top:18px;font-size:.8rem;color:var(--ink-soft);opacity:.75}
+
+  /* ---------- certificate ---------- */
+  .cert{margin-top:20px;border-top:1px dashed var(--line);padding-top:20px}
+  .cert .cert-lead{color:var(--ink-soft);font-size:.95rem;margin-bottom:12px}
+  .cert-form{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+  .cert-form input{flex:1 1 220px;max-width:320px;background:rgba(232,212,134,.06);border:1.5px solid var(--line);border-radius:10px;padding:12px 16px;font:inherit;font-size:1.05rem;color:var(--ink);text-align:center}
+  .cert-form input::placeholder{color:var(--ink-soft)}
+  .cert-form input:focus{outline:none;border-color:var(--gold)}
+  .cert-btn{background:var(--gold);color:var(--bg);border:0;border-radius:99px;padding:12px 26px;font:inherit;font-weight:700;cursor:pointer;transition:.2s;min-height:48px}
+  .cert-btn:hover{background:var(--gold-soft);transform:translateY(-2px)}
+  .cert-hint{color:var(--bad);font-size:.88rem;margin-top:8px;min-height:1.2em}
+  .cert-preview{margin-top:16px}
+  .cert-preview img{max-width:100%;border-radius:10px;border:1px solid var(--line);box-shadow:var(--shadow)}
+  .cert-dl{display:inline-block;margin-top:12px;color:var(--gold);text-decoration:none;border:1.5px solid var(--gold);border-radius:99px;padding:10px 22px;font-weight:700;min-height:44px}
+  .cert-dl:hover{background:rgba(232,212,134,.12)}
+
+  /* ---------- mobile-first tuning ---------- */
+  @media(max-width:600px){
+    body{font-size:1.02rem;line-height:1.8}
+    .wrap{padding:0 16px}
+    .hero{padding:60px 16px 26px}
+    .hero .frame{padding:40px 18px}
+    .hero .frame::before,.hero .frame::after{width:24px;height:24px}
+    .hero .byline{font-size:.96rem}
+    .divider{margin:42px 0}
+    .sec-head{margin-bottom:26px}
+    .facts{gap:14px}
+    .fact{padding:18px 16px}
+    .timeline::before{left:18px}
+    .step{padding-left:56px}
+    .step .dot{left:6px}
+    .point{padding:14px 16px;gap:12px}
+    .verse{padding:28px 18px 22px}
+    .verse .lines{font-size:1.08rem;line-height:1.95}
+    .quiz-shell{padding:22px 16px}
+    .q .qh{font-size:1.08rem}
+    .opt{padding:14px 14px;font-size:1.05rem;min-height:54px}
+    .opt:hover:not(:disabled){transform:none}
+    .cert-form input,.cert-btn{flex:1 1 100%;max-width:none}
+  }
 
   /* reveal */
   .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
@@ -364,6 +404,15 @@
         </svg>
         <div class="verdict" id="verdict"></div>
         <div class="rp" id="rp"></div>
+        <div class="cert">
+          <div class="cert-lead">🏅 กรอกชื่อเพื่อรับเกียรติบัตร แล้วดาวน์โหลดเก็บไว้ได้เลย</div>
+          <div class="cert-form">
+            <input id="cert-name" type="text" placeholder="พิมพ์ชื่อของคุณ" maxlength="40" autocomplete="off" />
+            <button class="cert-btn" id="cert-btn" type="button">รับเกียรติบัตร</button>
+          </div>
+          <div class="cert-hint" id="cert-hint"></div>
+          <div class="cert-preview" id="cert-preview"></div>
+        </div>
         <button class="restart" onclick="location.reload()">ทำอีกครั้ง</button>
       </div>
     </div>
@@ -447,6 +496,7 @@ function showResult(){
   fg.style.transition='stroke-dashoffset 1.2s ease';
   setTimeout(()=>{fg.style.strokeDashoffset=C*(1-pct/100)},120);
   let cur=0;const t=setInterval(()=>{cur++;document.getElementById('ring-pct').textContent=cur+'%';if(cur>=pct)clearInterval(t)},18);
+  setTimeout(()=>{clearInterval(t);document.getElementById('ring-pct').textContent=pct+'%';},2200); // ensure final value even if throttled
   let v,p;
   if(pct===100){v='ยอดเยี่ยม! เป็นเลิศทางวรรณคดี';p='ตอบถูกทุกข้อ เข้าใจรำพันพิลาปอย่างลึกซึ้ง';}
   else if(pct>=60){v='เก่งมาก!';p='เข้าใจเนื้อหาได้ดี ลองทบทวนข้อที่พลาดอีกนิด';}
@@ -456,11 +506,95 @@ function showResult(){
   res.scrollIntoView({behavior:'smooth',block:'center'});
 }
 
+/* ---------- certificate ---------- */
+const THAI_MONTHS=["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"];
+function thaiDate(){const d=new Date();return `${d.getDate()} ${THAI_MONTHS[d.getMonth()]} พ.ศ. ${d.getFullYear()+543}`;}
+
+document.getElementById('cert-btn').addEventListener('click',async()=>{
+  const name=document.getElementById('cert-name').value.trim();
+  const hint=document.getElementById('cert-hint');
+  if(!name){hint.textContent='กรุณาพิมพ์ชื่อก่อนรับเกียรติบัตร';return;}
+  hint.textContent='';
+  try{
+    await Promise.all([
+      document.fonts.load('400 1em "Chonburi"'),
+      document.fonts.load('700 1em "Sarabun"'),
+      document.fonts.load('400 1em "Sarabun"')
+    ]);
+  }catch(e){}
+  const pct=Math.round(score/QUIZ.length*100);
+  const url=drawCertificate(name,score,QUIZ.length,pct);
+  const safe=name.replace(/[\\/:*?"<>|]/g,'_');
+  document.getElementById('cert-preview').innerHTML=
+    `<img src="${url}" alt="เกียรติบัตร" /><br/><a class="cert-dl" href="${url}" download="เกียรติบัตร-รำพันพิลาป-${safe}.png">⬇ ดาวน์โหลดเกียรติบัตร (PNG)</a>`;
+});
+
+function drawCertificate(name,sc,total,pct){
+  const W=1200,H=850,c=document.createElement('canvas');c.width=W;c.height=H;
+  const x=c.getContext('2d');
+  // background
+  const g=x.createLinearGradient(0,0,0,H);g.addColorStop(0,'#0e1838');g.addColorStop(1,'#0a1430');
+  x.fillStyle=g;x.fillRect(0,0,W,H);
+  // soft glow
+  const rg=x.createRadialGradient(W/2,180,40,W/2,180,700);rg.addColorStop(0,'rgba(232,212,134,.10)');rg.addColorStop(1,'rgba(232,212,134,0)');
+  x.fillStyle=rg;x.fillRect(0,0,W,H);
+  // borders
+  x.strokeStyle='#e8d486';x.lineWidth=4;x.strokeRect(30,30,W-60,H-60);
+  x.strokeStyle='rgba(232,212,134,.45)';x.lineWidth=1.5;x.strokeRect(46,46,W-92,H-92);
+  // corner ornaments
+  x.strokeStyle='#e8d486';x.lineWidth=4;const cs=54,off=30;
+  [[off,off,1,1],[W-off,off,-1,1],[off,H-off,1,-1],[W-off,H-off,-1,-1]].forEach(([cx,cy,sx,sy])=>{
+    x.beginPath();x.moveTo(cx,cy+sy*cs);x.lineTo(cx,cy);x.lineTo(cx+sx*cs,cy);x.stroke();
+  });
+  x.textAlign='center';
+  // title
+  x.fillStyle='#e8d486';x.font='400 82px "Chonburi", serif';x.fillText('เกียรติบัตร',W/2,175);
+  x.fillStyle='#cbb98f';x.font='400 26px "Sarabun", sans-serif';
+  x.fillText('บอร์ดนิทรรศการภาษาไทย · วรรณคดีเรื่อง รำพันพิลาป',W/2,220);
+  // divider
+  x.strokeStyle='rgba(232,212,134,.5)';x.lineWidth=2;x.beginPath();x.moveTo(W/2-130,250);x.lineTo(W/2+130,250);x.stroke();
+  // body
+  x.fillStyle='#ece4c8';x.font='400 30px "Sarabun", sans-serif';
+  x.fillText('ขอมอบเกียรติบัตรฉบับนี้ให้ไว้เพื่อแสดงว่า',W/2,330);
+  // name
+  x.fillStyle='#e8d486';x.font='700 68px "Sarabun", sans-serif';
+  let dn=name;while(x.measureText(dn).width>W-220&&dn.length>1){dn=dn.slice(0,-1);}
+  if(dn!==name)dn=dn.slice(0,-1)+'…';
+  x.fillText(dn,W/2,415);
+  // name underline
+  const nw=Math.min(x.measureText(dn).width+60,W-160);
+  x.strokeStyle='rgba(232,212,134,.5)';x.lineWidth=2;x.beginPath();x.moveTo(W/2-nw/2,440);x.lineTo(W/2+nw/2,440);x.stroke();
+  // achievement
+  x.fillStyle='#ece4c8';x.font='400 30px "Sarabun", sans-serif';
+  x.fillText('ได้ผ่านแบบทดสอบความเข้าใจ เรื่อง รำพันพิลาป',W/2,505);
+  x.fillText('ของพระสุนทรโวหาร (สุนทรภู่)',W/2,548);
+  // score pill
+  x.fillStyle='#e8d486';x.font='700 44px "Sarabun", sans-serif';
+  x.fillText(`ด้วยคะแนน ${sc} / ${total}  (${pct}%)`,W/2,640);
+  // date + footer
+  x.fillStyle='#cbb98f';x.font='400 26px "Sarabun", sans-serif';
+  x.fillText(thaiDate(),W/2,720);
+  x.fillStyle='#8a7038';x.font='400 40px "Chonburi", serif';
+  x.fillText('รำพันพิลาป',W/2,790);
+  return c.toDataURL('image/png');
+}
+
 /* ---------- reveal on scroll ---------- */
 const io=new IntersectionObserver((es)=>{
   es.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}});
 },{threshold:.12});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 </script>
+
+<!-- ============================================================
+     Cloudflare Web Analytics (นับสถิติผู้ชม)
+     วิธีเปิดใช้:
+       1) สมัคร/เข้าสู่ระบบ Cloudflare → เมนู "Web Analytics"
+       2) Add a site → ใส่ meatball-007.github.io/ramphan-philap
+       3) คัดลอก token ที่ได้ มาแทนที่ CLOUDFLARE_TOKEN ด้านล่าง
+     ก่อนใส่ token จริง สคริปต์นี้จะยังไม่ส่งข้อมูล (ไม่ทำให้เว็บพัง)
+     ============================================================ -->
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon='{"token": "CLOUDFLARE_TOKEN"}'></script>
 </body>
 </html>

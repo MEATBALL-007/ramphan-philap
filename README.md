@@ -15,6 +15,19 @@
 
 เป็นไฟล์ `index.html` ไฟล์เดียว ไม่มี dependency เปิดได้ด้วยการดับเบิลคลิก
 
+## ฟีเจอร์สำหรับงานนิทรรศการ
+- **Mobile-first** — ปรับให้อ่าน/แตะง่ายบนมือถือ (คนส่วนใหญ่สแกน QR ด้วยมือถือ)
+- **เกียรติบัตร** — ทำแบบทดสอบครบ กรอกชื่อ แล้วดาวน์โหลดเกียรติบัตร PNG ได้ (วาดด้วย canvas, ทำงานออฟไลน์)
+- **สถิติผู้ชม** — ฝัง Cloudflare Web Analytics (ดูวิธีตั้งค่าด้านล่าง)
+
+## ตั้งค่าสถิติผู้ชม (Cloudflare Web Analytics)
+สคริปต์ถูกฝังไว้แล้วใน `index.html` แต่ต้องใส่ token ก่อนจึงจะเริ่มนับ:
+1. เข้า https://dash.cloudflare.com → เมนู **Web Analytics**
+2. **Add a site** → ใส่ `meatball-007.github.io/ramphan-philap`
+3. คัดลอก **token** ที่ได้
+4. ใน `index.html` แทนที่ `CLOUDFLARE_TOKEN` ด้วย token จริง แล้ว push
+> ก่อนใส่ token จริง สคริปต์จะยังไม่ส่งข้อมูล และไม่ทำให้เว็บพัง
+
 ## แหล่งอ้างอิง
 - [วิกิพีเดีย — รำพันพิลาป](https://th.wikipedia.org/wiki/รำพันพิลาป)
 - [ฐานข้อมูลนามานุกรมวรรณคดีไทย (SAC)](https://thailitdir.sac.or.th/detail.php?meta_id=214)
