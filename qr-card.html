@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<title>ป้าย QR — รำพันพิลาป</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Chonburi&family=Charmonman:wght@700&family=Sarabun:wght@400;600;700&display=swap" rel="stylesheet" />
+<style>
+  @page{size:A5;margin:0}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Sarabun',sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;background:#cbb98f;color:#2c2114}
+  .card{
+    width:420px;background:#f3e9d2;border:2px solid #b58a35;border-radius:14px;
+    padding:34px 34px 30px;text-align:center;position:relative;
+    box-shadow:0 20px 50px -20px rgba(44,33,20,.6)}
+  .card::before,.card::after{content:"";position:absolute;width:26px;height:26px;border:2px solid #7a2222;opacity:.7}
+  .card::before{top:10px;left:10px;border-right:0;border-bottom:0}
+  .card::after{bottom:10px;right:10px;border-left:0;border-top:0}
+  .kick{letter-spacing:.28em;color:#7a2222;font-weight:600;font-size:.8rem;text-transform:uppercase}
+  h1{font-family:'Chonburi',serif;font-weight:400;color:#5c1717;font-size:2.9rem;line-height:1;margin:6px 0 2px}
+  .sub{font-family:'Charmonman',cursive;color:#28324f;font-size:1.2rem;font-weight:700;margin-bottom:16px}
+  .qr{background:#fff;border:1px solid #e4d3ac;border-radius:10px;padding:14px;display:inline-block}
+  .qr img{width:240px;height:240px;display:block}
+  .scan{margin-top:16px;font-weight:700;font-size:1.1rem;color:#2c2114}
+  .scan span{color:#7a2222}
+  .url{margin-top:4px;font-size:.82rem;color:#5a4a35;word-break:break-all}
+  .foot{margin-top:14px;font-size:.75rem;color:#5a4a35;opacity:.8;border-top:1px solid #e4d3ac;padding-top:10px}
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="kick">วรรณคดีไทย · สุนทรภู่</div>
+    <h1>รำพันพิลาป</h1>
+    <div class="sub">อินโฟกราฟิกวรรณคดี</div>
+    <div class="qr"><img src="qr-ramphan-philap.png" alt="QR รำพันพิลาป" /></div>
+    <div class="scan">📱 <span>สแกนเพื่อชมเนื้อหา</span></div>
+    <div class="url">meatball-007.github.io/ramphan-philap</div>
+    <div class="foot">บอร์ดนิทรรศการภาษาไทย · มีแบบทดสอบท้ายหน้า</div>
+  </div>
+</body>
+</html>
